@@ -1,0 +1,78 @@
+import { render } from "./node_modules/lit-html/lit-html.js";
+import { createBook, deleteBook, getAllBooks, updateBook } from "./src/api.js";
+import { mainTemplate } from "./src/templates/mainTemplate.js";
+import { tableRowsTemplate } from "./src/templates/tableRowsTemplate.js";
+import { editButtonHandler } from "./src/actions.js";
+
+const documentBody = document.querySelector("body");
+render(mainTemplate(), documentBody);
+
+document.querySelector("#loadBooks").addEventListener("click", async () => {
+  const booksData = await getAllBooks();
+  const section = documentBody.querySelector("table tbody");
+  const books = [];
+  for (const id in booksData) {
+    books.push({
+      author: booksData[id].author,
+      title: booksData[id].title,
+      _id: id,
+    });
+  }
+  const context = {
+    books,
+    deleteFunction,
+    editButtonHandler,
+  };
+  render(tableRowsTemplate(context), section);
+});
+
+const addFormElement = document.querySelector("#add-form");
+addFormElement.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const formData = new FormData(addFormElement);
+  const author = formData.get("author");
+  const title = formData.get("title");
+
+  if (!title || !author) {
+    return alert("Empty fields!");
+  }
+
+  const book = {
+    author,
+    title,
+  };
+
+  await createBook(book).then((data) => {
+    documentBody.querySelector("#loadBooks").click();
+    addFormElement.reset();
+  });
+});
+
+const editFormElement = documentBody.querySelector("#edit-form");
+editFormElement.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const formData = new FormData(editFormElement);
+  const id = formData.get("id");
+  const author = formData.get("author");
+  const title = formData.get("title");
+
+  if (!title || !author) {
+    return alert("Empty fields!");
+  }
+  const book = {
+    author,
+    title,
+  };
+
+  await updateBook(id, book).then(() => {
+    documentBody.querySelector("#loadBooks").click();
+    editFormElement.style.display = "none";
+    editFormElement.reset();
+    addFormElement.style.display = "block";
+  });
+});
+
+function deleteFunction(id) {
+  deleteBook(id);
+  documentBody.querySelector("#loadBooks").click();
+}
