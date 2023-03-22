@@ -1,55 +1,35 @@
-// [x] improve html
-// [x] create app.js module
-// [x] create router.js
-// [x] placeholder for all views
-// implement views
-// - create req logic
-// - DOM manipulation logic
+import { deleteMovie, likeMovie } from "./api/data.js";
+import { initialize } from "./api/router.js";
+import { logout } from "./api/user.js";
+import { addMoviePage } from "./pages/addMovie.js";
+import { editMoviePage } from "./pages/editMovie.js";
+import { homePage } from "./pages/home.js";
+import { loginPage } from "./pages/login.js";
+import { movieInfoPage } from "./pages/movieInfo.js";
+import { registerPage } from "./pages/register.js";
 
-// [] catalog
-// [] login
-// [] register
-// [] create
-// [] details
-// [] like
-// [] edit
-// [] delete
+document.getElementById('all').remove();
 
-import { updateNav } from "./util.js";
-import { createPage } from "./views/create.js";
-import { homePage } from "./views/home.js";
-import { loginPage } from "./views/login.js";
-import { registerPage } from "./views/register.js";
-
-const routes = {
-  "/": homePage,
-  "/login": loginPage,
-  "/logout": logout,
-  "/register": registerPage,
-  "/create": createPage,
-};
-
-document.querySelector("nav").addEventListener("click", onNavigate);
-document
-  .querySelector("#add-movie-button a")
-  .addEventListener("click", onNavigate);
-
-function onNavigate(e) {
-  if (e.target.tagName === "A" && e.target.href) {
-    e.preventDefault();
-    const url = new URL(e.target.href);
-    const view = routes[url.pathname];
-    if (typeof view === "function") {
-      view();
-    }
-  }
+const links = {
+    '/': homePage,
+    '/add': addMoviePage,
+    '/movieInfo': movieInfoPage,
+    '/editMovie': editMoviePage,
+    '/delMovie': deleteMovie,
+    '/likeMovie': likeMovie,
+    '/login': loginPage,
+    '/register': registerPage,
+    '/logout': logoutFunc
 }
 
-function logout() {
-  localStorage.removeItem("user");
-  updateNav();
-  loginPage();
+async function logoutFunc(){
+    await logout();
+    router.updateNav();
+    router.goTo('/login');
 }
 
-updateNav();
-homePage();
+const router = initialize(links);
+
+router.goTo('/')
+router.updateNav();
+

@@ -3,17 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <title>Movies</title>
-    <link rel="icon" type="image/png" href="static/favicon.ico" />
-    <link href="static/css/site.css" type="text/css" rel="stylesheet" />
+    <link rel="icon" type="image/png" href="/static/favicon.ico" />
+    <!-- /Applications/4.Homework/02.Movies -->
+    <link href="/static/css/site.css" type="text/css" rel="stylesheet" />
     <link
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
       crossorigin="anonymous"
     />
-    <script src="src/app.js" type="module"></script>
+    <script src="/src/app.js" type="module"></script>
   </head>
-
+  
   <body>
     <div class="container" id="container">
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -33,7 +34,8 @@
           </li>
         </ul>
       </nav>
-
+      <main></main>
+      <div id="all">
       <section id="home-page" class="view-section">
         <div
           class="jumbotron jumbotron-fluid text-light"
@@ -55,7 +57,7 @@
         <h1 class="text-center">Movies</h1>
 
         <section id="add-movie-button" class="user">
-          <a href="/create" class="btn btn-warning">Add Movie</a>
+          <a href="#" class="btn btn-warning">Add Movie</a>
         </section>
 
         <section id="movie">
@@ -146,6 +148,17 @@
         <form class="text-center border border-light p-5" action="#" method="">
           <h1>Edit Movie</h1>
           <div class="form-group">
+            <label for="imageUrl">Image url</label>
+            <input
+              id="imageUrl"
+              type="text"
+              class="form-control"
+              placeholder="Image Url"
+              value=""
+              name="img"
+            />
+          </div>
+          <div class="form-group">
             <label for="title">Movie Title</label>
             <input
               id="title"
@@ -158,23 +171,16 @@
           </div>
           <div class="form-group">
             <label for="description">Movie Description</label>
-            <textarea
+            <input
+              value=""
+              type="text"
+              id="description"
               class="form-control"
               placeholder="Movie Description..."
               name="description"
-            ></textarea>
-          </div>
-          <div class="form-group">
-            <label for="imageUrl">Image url</label>
-            <input
-              id="imageUrl"
-              type="text"
-              class="form-control"
-              placeholder="Image Url"
-              value=""
-              name="img"
             />
           </div>
+          
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>
       </section>
@@ -258,7 +264,7 @@
           <button type="submit" class="btn btn-primary">Register</button>
         </form>
       </section>
-
+    </div>
       <footer class="page-footer font-small">
         <div class="footer-copyright text-center py-3">
           &copy; 2020
