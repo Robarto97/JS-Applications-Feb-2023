@@ -1,6 +1,6 @@
 import { html } from "../../node_modules/lit-html/lit-html.js";
 
-// TODO Replcae with actual layout
+// TODO Replace with actual layout
 export const layoutTemplate = (userData, content) => html`
   <nav>
     <a href="/">Home</a>

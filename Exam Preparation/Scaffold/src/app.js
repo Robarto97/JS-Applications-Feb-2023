@@ -11,7 +11,7 @@ import { logout } from "./data/auth.js";
 const root = document.body;
 
 page(decorateContext);
-page("index.html", "/");
+page("/index.html", "/");
 page("/", homePage);
 page("/login", loginPage);
 page("/register", registerPage);
@@ -24,7 +24,6 @@ function decorateContext(ctx, next) {
   next();
 }
 
-// TODO Inject dependencies
 function renderView(content) {
   const userData = getUserData();
   render(layoutTemplate(userData, content), root);

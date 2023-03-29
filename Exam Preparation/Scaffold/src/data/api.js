@@ -8,7 +8,6 @@ async function request(method, url, data) {
     headers: {},
   };
 
-  // TODO load user data
   const userData = getUserData();
   if (userData) {
     const token = userData.accessToken;
